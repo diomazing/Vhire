@@ -19,12 +19,22 @@
             $trip_id = $_GET['id'];
         }
 
-        $to_email = 'jksia1000@gmail.com'; //Change to customer email under Customers table
-        $subject = 'Reservation Confirmation';
-        $message = 'We have successfully added a reservation for your transportation. Thank you for using VHire';
-        $headers = 'From: vhire@company.com';
-        mail($to_email,$subject,$message,$headers);
 
+        include_once './php/reservation_action.php';
+        $error = "";
+        if(isset($_POST['reserve'])){
+            $totalFare =  $_POST['fare'] *  $_POST['quantity'];
+            $date = new DateTime();
+            $currentDate = $date->format('Y-m-d H:i:s');
+            //call create_reservation function
+            $result = create_reservation($_POST['customerID'],$_POST['tripID'],$_POST['quantity'],$currentDate,$totalFare);
+        
+            if($result){
+
+            }else{
+                $error = "Error creating reservation request";
+            }
+        }
         include_once './php/head.php';
     ?>
     <body>
@@ -58,16 +68,21 @@
                             $arrival = $row1['EstimatedTimeArrival'];
                             $atime = new DateTime($arrival);
                         }
+
                         $conn->close();
                     ?>
 
                     <div class="center3">
                         <div class="table_div2">
                             <!-- This will show the Booking of ticket of the chosen route where users can reserve tickets up to the number of available seats  -->
+                            <?php echo $error;?>
                             <table>
                                 <form method="POST">
                                 <tr>
                                     <th colspan="2"><?php echo $row1['LocationName']." - ".$row2['LocationName']; ?></th>
+                                    <input type="hidden" name="tripID" value="<?php echo $trip_id;?>">
+                                    <input type="hidden" name="customerID" value="<?php echo $_SESSION['user']['CustomerID'];?>">
+                                    <input type="hidden" name="fare" value="<?php echo $row1['Fare'];?>">
                                 </tr>
                                 <tr>
                                     <td class="td_bold">Vehicle Plate No.</td>
@@ -95,7 +110,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><button type="submit" name="" class="button_blue">Buy Ticket</button></td>
+                                    <td><button type="submit" name="reserve">Buy Ticket</button></td>
                                 </tr>
                             </form>
                             </table>
