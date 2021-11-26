@@ -52,7 +52,16 @@
                             $arrival = $row1['EstimatedTimeArrival'];
                             $atime = new DateTime($arrival);
                         }
+
+                        if(isset($_POST['reserve'])){
+                            $totalFare =  $_POST['fare'] *  $_POST['quantity'];
+                            
+                        }
+
                         $conn->close();
+                   
+
+
                     ?>
 
                     <div class="center3">
@@ -62,6 +71,9 @@
                                 <form method="POST">
                                 <tr>
                                     <th colspan="2"><?php echo $row1['LocationName']." - ".$row2['LocationName']; ?></th>
+                                    <input type="hidden" name="tripID" value="<?php echo $trip_id;?>">
+                                    <input type="hidden" name="customerID" value="<?php echo $_SESSION['user']['CustomerID'];?>">
+                                    <input type="hidden" name="fare" value="<?php echo $row1['Fare'];?>">
                                 </tr>
                                 <tr>
                                     <td class="td_bold">Vehicle Plate No.</td>
@@ -89,7 +101,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><button type="submit" name="" class="button_blue">Buy Ticket</button></td>
+                                    <td><button type="submit" name="reserve" class="button_blue">Buy Ticket</button></td>
                                 </tr>
                             </form>
                             </table>
