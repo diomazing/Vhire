@@ -59,6 +59,7 @@
                         <div class="table_div2">
                             <!-- This will show the Booking of ticket of the chosen route where users can reserve tickets up to the number of available seats  -->
                             <table>
+                                <form method="POST">
                                 <tr>
                                     <th colspan="2"><?php echo $row1['LocationName']." - ".$row2['LocationName']; ?></th>
                                 </tr>
@@ -76,7 +77,7 @@
                                 </tr>
                                 <tr>
                                     <td class="td_bold">Quantity</td>
-                                    <td><input type="number" id="t_quantity" name="t_quantity" value="1" min="1" max="<?php echo $row1['AvailableSeats']; ?>" oninput="calcFare()"></td>
+                                    <td><input type="number" id="t_quantity" name="quantity" value="1" min="1" max="<?php echo $row1['AvailableSeats']; ?>" oninput="calcFare()"></td>
                                 </tr>
                                 <tr>
                                     <td class="td_bold">Fare Price</td>
@@ -88,8 +89,9 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><a href="" class="button_blue"><button>Buy Ticket</button></a></td>
+                                    <td><button type="submit" name="" class="button_blue">Buy Ticket</button></td>
                                 </tr>
+                            </form>
                             </table>
                         </div>
                     </div>
