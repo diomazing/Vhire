@@ -7,4 +7,13 @@
 
         return $res;
     }
+
+    function get_reservationID($custID,$tripID,$booked){
+        $conn = mysqli_connect("localhost","root","","Vhire_Booking");
+
+        $res = mysqli_query($conn, "SELECT ReservationID FROM reservations WHERE CustomerID =".$custID." 
+                            AND TripID =".$tripID." AND BookedDate = '".$booked."'");
+
+        return $res;      
+    }
 ?>

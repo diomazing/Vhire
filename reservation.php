@@ -23,20 +23,25 @@
         include_once './php/reservation_action.php';
         $error = "";
         if(isset($_POST['reserve'])){
+            //initialize variables
             $totalFare =  $_POST['fare'] *  $_POST['quantity'];
             $date = new DateTime();
             $currentDate = $date->format('Y-m-d H:i:s');
-            //call create_reservation function
 
+            //call create_reservation function and get reservation id
             $result = create_reservation($_POST['customerID'],$_POST['tripID'],$_POST['quantity'],$currentDate,$totalFare);
-        
-            if($result){
-                echo "Sending email";
+            $result2 = get_reservationID($_POST['customerID'],$_POST['tripID'],$currentDate);
+            $reservation = mysqli_fetch_assoc($result2);
             
-                if(mail($_SESSION['user']['Email'],"Confirm Booking Request","Please confirm your booking request","From:phpmailtesting8@gmail.com")){
-                    echo "Email sent successfully to ".$_SESSION['user']['Email'];
+            //email message
+            $message = "Please confirm booking request by clicking on this link. http://localhost/Vhire_Updated/confirm.php?id=".$reservation['ReservationID'];
+            
+            if($result){
+                //sending email
+                if(mail($_SESSION['user']['Email'],"Confirm Booking Request",$message,"From:phpmailtesting8@gmail.com")){
+                    $error = "<h1 style='color:green'>Email sent successfully to ".$_SESSION['user']['Email']."</h1>";
                 }else{
-                    echo "Sorry, failed while sending mail!";
+                    $error = "<h1 style='color:green'>Sorry, failed while sending mail</h1>";
                 }
             }else{
                 $error = "Error creating reservation request";
