@@ -116,9 +116,11 @@
                                     <td id="total_fare"><?php echo $row1['Fare']; ?></td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td><button type="submit" name="reserve">Buy Ticket</button></td>
+                                    <td colspan = "2">
+                                        <button type="submit" name="reserve" id="button_blue" style="margin: 0 36%">Buy Ticket</button>
+                                    </td>  
                                 </tr>
+                                
                             </form>
                             </table>
                         </div>

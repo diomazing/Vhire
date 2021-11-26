@@ -342,19 +342,32 @@ button:active {
   align-items: center;
   width: 100%;
 }
-.center3 button {
+.buttonRed {
   background-color: red;
   padding: 3px;
   font-weight: bold;
   border: none;
   margin-top: 0;
 }
-.center3 button:hover {
+.buttonRed:hover {
+  background-color: #c20c00;
+}
+.buttonRed:active {
+  background-color: #ff4c40;
+}
+/* .center3 button {
+  background-color: red;
+  padding: 3px;
+  font-weight: bold;
+  border: none;
+  margin-top: 0;
+} */
+/* .center3 button:hover {
   background-color: #c20c00;
 }
 .center3 button:active {
   background-color: #ff4c40;
-}
+} */
 
 .center4 {
   max-width: 1500px;
@@ -648,7 +661,7 @@ button:active {
   width: 500px;
 }
 
-.button_blue button {
+#button_blue {
   background-color: #000080;
   font-size: 1.5rem;
   width: 22%;
@@ -656,10 +669,10 @@ button:active {
   border: 2px solid black;
   font-weight: normal;
 }
-.button_blue button:hover {
+#button_blue:hover {
   background-color: #00009e;
 }
-.button_blue button:active {
+#button_blue:active {
   background-color: #000057;
 }
 

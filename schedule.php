@@ -73,7 +73,7 @@
                                     <td><?php echo $trip['AvailableSeats'];?></td>
                                     <td class="td_other"><?php echo $trip['EstimatedTimeDeparture']." - ".$trip['EstimatedTimeArrival'];?></td>
                                     <td class="td_other"><?php echo $trip['Fare'];?></td>
-                                    <td><a href="/Vhire_Updated/reservation.php/?id=<?php echo $trip['TripID'];?>"><button>+</button></a></td>
+                                    <td><a href="/Vhire_Updated/reservation.php/?id=<?php echo $trip['TripID'];?>"><button class="buttonRed">+</button></a></td>
                                 </tr>
                                 <?php } ?>
                             </table>
