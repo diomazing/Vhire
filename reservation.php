@@ -27,10 +27,17 @@
             $date = new DateTime();
             $currentDate = $date->format('Y-m-d H:i:s');
             //call create_reservation function
+
             $result = create_reservation($_POST['customerID'],$_POST['tripID'],$_POST['quantity'],$currentDate,$totalFare);
         
             if($result){
-
+                echo "Sending email";
+            
+                if(mail($_SESSION['user']['Email'],"Confirm Booking Request","Please confirm your booking request","From:phpmailtesting8@gmail.com")){
+                    echo "Email sent successfully to ".$_SESSION['user']['Email'];
+                }else{
+                    echo "Sorry, failed while sending mail!";
+                }
             }else{
                 $error = "Error creating reservation request";
             }
