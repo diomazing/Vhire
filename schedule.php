@@ -13,6 +13,16 @@
             header('Location:./login.php');
         }
 
+        // Fetch all terminal
+        $res = mysqli_query($conn, "SELECT * FROM terminal");
+
+        // Terminal Names into Local Array (Separate Query)
+        $terminal = mysqli_query($conn, "SELECT * FROM terminal");
+        $terminalName = array();
+        for($x = 1; $row = mysqli_fetch_assoc($terminal); $x++){
+            $terminalName[$x] = $row['LocationName'];
+        }      
+
         include_once './php/head.php';
     ?>
     <body>
@@ -35,102 +45,40 @@
                     <div class="center3">
                         <div class="title2">
                             <!-- This will show the Schedule for today -->
-                            <h1>Schedule for Month XX, 2021</h1>
+                            <h1>Schedule for Month <?php echo Date('F');?>, 2021</h1>
                         </div>
                         <div class="table_div">
                             <!-- This will show all the Terminals and their respective scheduled departure time of the day (iterate from the route table) -->
+                        <?php while($terminal = mysqli_fetch_assoc($res)) {
+                                $res2 = mysqli_query($conn, "SELECT * FROM trip INNER JOIN route ON trip.RouteID = route.RouteID 
+                                                            INNER JOIN vhire ON trip.VehicleID = vhire.VehicleID 
+                                                            WHERE route.OriginalTerminalID =".$terminal['TerminalID']);
+                            ?>  
                             <table>
                                 <tr>
-                                    <th colspan="7">Location 1</th>
+                                    <th colspan="7"><?php echo $terminal['LocationName']?></th>
                                 </tr>
+
+                        <?php if(mysqli_num_rows($res2) == 0) { 
+                            echo "</table>No available trips for now.";
+
+                        } else { 
+                            while($trip = mysqli_fetch_assoc($res2)) {?>
+                            
                                 <tr>
-                                    <td class="td_bold">1</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>11</td>
-                                    <td class="td_other">8:00 - 8:30</td>
-                                    <td class="td_other">PHP 100</td>
-                                    <td><a href="/Vhire_Updated/reservation.php/?id=1"><button>+</button></a></td>
+                                    <td class="td_bold"><?php echo $trip['TripID'];?></td>
+                                    <td class="td_bold"><?php echo $trip['PlateNumber'];?></td>
+                                    <td class="td_location"><?php echo $terminalName[$trip['OriginalTerminalID']]." to ".$terminalName[$trip['DestinationTerminalID']]; ?></td>
+                                    <td><?php echo $trip['AvailableSeats'];?></td>
+                                    <td class="td_other"><?php echo $trip['EstimatedTimeDeparture']." - ".$trip['EstimatedTimeArrival'];?></td>
+                                    <td class="td_other"><?php echo $trip['Fare'];?></td>
+                                    <td><a href="/Vhire_Updated/reservation.php/?id=<?php echo $trip['TripID'];?>"><button>+</button></a></td>
                                 </tr>
-                                <tr>
-                                    <td class="td_bold">2</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>12</td>
-                                    <td>9:00 - 9:30</td>
-                                    <td>PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
+                                <?php } ?>
                             </table>
-                            <table>
-                                <tr>
-                                    <th colspan="7">Location 2</th>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">1</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>11</td>
-                                    <td class="td_other">8:00 - 8:30</td>
-                                    <td class="td_other">PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">2</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>12</td>
-                                    <td>9:00 - 9:30</td>
-                                    <td>PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <th colspan="7">Location 3</th>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">1</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>11</td>
-                                    <td class="td_other">8:00 - 8:30</td>
-                                    <td class="td_other">PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">2</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>12</td>
-                                    <td>9:00 - 9:30</td>
-                                    <td>PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                            </table>
-                            <table>
-                                <tr>
-                                    <th colspan="7">Location 4</th>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">1</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>11</td>
-                                    <td class="td_other">8:00 - 8:30</td>
-                                    <td class="td_other">PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                                <tr>
-                                    <td class="td_bold">2</td>
-                                    <td class="td_bold">ABC 123</td>
-                                    <td class="td_location">Location X to Location X</td>
-                                    <td>12</td>
-                                    <td>9:00 - 9:30</td>
-                                    <td>PHP 100</td>
-                                    <td><button>+</button></td>
-                                </tr>
-                            </table>
+                        <?php } 
+                        }
+                        ?>
                         </div>
                     </div>
                 </div>
