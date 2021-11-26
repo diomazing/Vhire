@@ -25,10 +25,10 @@
         <header>
             <div id="header">
                 <div class="hamburgerMenu">
-                    <img id="menu" src="./images/icons/menu.png" alt="menu" onclick="menuButton()">
+                    <img id="menu" src="/images/icons/menu.png" alt="menu" onclick="menuButton()">
                 </div>
                 <div>
-                    <a href="index.php"><img id="logo" src="./images/icons/logo.png" alt="logo"></a>
+                    <a href="index.php"><img id="logo" src="/images/icons/logo.png" alt="logo"></a>
                 </div>
             </div>
         </header>
@@ -88,7 +88,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><a href="#" class="button_blue"><button>Buy Ticket</button></a></td>
+                                    <td><a href="" class="button_blue"><button>Buy Ticket</button></a></td>
                                 </tr>
                             </table>
                         </div>
