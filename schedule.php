@@ -55,7 +55,7 @@
                                                             INNER JOIN vhire ON trip.VehicleID = vhire.VehicleID 
                                                             WHERE route.OriginalTerminalID =".$terminal['TerminalID']);
                             ?>  
-                            <table>
+                            <table style="margin: 2rem 0">
                                 <tr>
                                     <th colspan="7"><?php echo $terminal['LocationName']?></th>
                                 </tr>
