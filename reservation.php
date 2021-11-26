@@ -19,6 +19,12 @@
             $trip_id = $_GET['id'];
         }
 
+        $to_email = 'jksia1000@gmail.com'; //Change to customer email under Customers table
+        $subject = 'Reservation Confirmation';
+        $message = 'We have successfully added a reservation for your transportation. Thank you for using VHire';
+        $headers = 'From: vhire@company.com';
+        mail($to_email,$subject,$message,$headers);
+
         include_once './php/head.php';
     ?>
     <body>
