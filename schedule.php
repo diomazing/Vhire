@@ -50,7 +50,7 @@
                                     <td>11</td>
                                     <td class="td_other">8:00 - 8:30</td>
                                     <td class="td_other">PHP 100</td>
-                                    <td><button>+</button></td>
+                                    <td><a href="/Vhire_Updated/reservation.php/?id=1"><button>+</button></a></td>
                                 </tr>
                                 <tr>
                                     <td class="td_bold">2</td>
