@@ -49,7 +49,7 @@
                         </div>
                         <div class="table_div">
                             <!-- This will show all the Terminals and their respective scheduled departure time of the day (iterate from the route table) -->
-                        <?php echo $_
+                        <?php 
                          while($terminal = mysqli_fetch_assoc($res)) {
                                 $res2 = mysqli_query($conn, "SELECT * FROM trip INNER JOIN route ON trip.RouteID = route.RouteID 
                                                             INNER JOIN vhire ON trip.VehicleID = vhire.VehicleID 

@@ -19,6 +19,22 @@
             $trip_id = $_GET['id'];
         }
 
+
+        include_once './php/reservation_action.php';
+        $error = "";
+        if(isset($_POST['reserve'])){
+            $totalFare =  $_POST['fare'] *  $_POST['quantity'];
+            $date = new DateTime();
+            $currentDate = $date->format('Y-m-d H:i:s');
+            //call create_reservation function
+            $result = create_reservation($_POST['customerID'],$_POST['tripID'],$_POST['quantity'],$currentDate,$totalFare);
+        
+            if($result){
+
+            }else{
+                $error = "Error creating reservation request";
+            }
+        }
         include_once './php/head.php';
     ?>
     <body>
@@ -53,20 +69,13 @@
                             $atime = new DateTime($arrival);
                         }
 
-                        if(isset($_POST['reserve'])){
-                            $totalFare =  $_POST['fare'] *  $_POST['quantity'];
-                            
-                        }
-
                         $conn->close();
-                   
-
-
                     ?>
 
                     <div class="center3">
                         <div class="table_div2">
                             <!-- This will show the Booking of ticket of the chosen route where users can reserve tickets up to the number of available seats  -->
+                            <?php echo $error;?>
                             <table>
                                 <form method="POST">
                                 <tr>
@@ -101,7 +110,7 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><button type="submit" name="reserve" class="button_blue">Buy Ticket</button></td>
+                                    <td><button type="submit" name="reserve">Buy Ticket</button></td>
                                 </tr>
                             </form>
                             </table>
