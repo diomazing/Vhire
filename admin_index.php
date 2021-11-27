@@ -50,12 +50,15 @@
                                                     CONCAT(driver.FirstName,' ',driver.LastName) AS DriverName,
                                                     trip.EstimatedTimeDeparture AS EstimatedTimeDeparture,
                                                     trip.EstimatedTimeArrival AS EstimatedTimeArrival,
-                                                    trip.Status AS Status
+                                                    trip.Status AS Status,
+                                                    trip.TripID AS TripID
                                                     FROM trip 
                                                     INNER JOIN route ON trip.RouteID = route.RouteID 
                                                     INNER JOIN vhire ON vhire.VehicleID = trip.VehicleID 
                                                     INNER JOIN driver ON driver.DriverID = vhire.DriverID
-                                                    WHERE route.OriginalTerminalID =".$terminal['TerminalID']);      
+                                                    WHERE route.OriginalTerminalID =".$terminal['TerminalID']."
+                                                    ORDER BY trip.EstimatedTimeDeparture
+                                                    ");      
                             $tripCount = mysqli_num_rows($result);
                             $result2 = mysqli_query($conn,"SELECT * FROM reservations 
                                                             INNER JOIN customer ON reservations.CustomerID = customer.CustomerID
@@ -77,6 +80,7 @@
                             <table class="paleBlueRows">
                                 <thead>
                                 <tr>
+                                    <th>Trip ID</th>
                                     <th>Vehicle Name</th>
                                     <th>Route ID</th>
                                     <th>Driver Name</th>
@@ -89,6 +93,7 @@
                                     <tbody>
                                         <?php while($trip = mysqli_fetch_assoc($result)){?>
                                             <tr>
+                                                <td><?php echo $trip["TripID"]; ?></td>
                                                 <td><?php echo $trip["VehicleName"]; ?></td>
                                                 <td><?php echo $trip["RouteID"]; ?></td>
                                                 <td><?php echo $trip["DriverName"]; ?></td>
@@ -132,7 +137,7 @@
                                                     <td><?php echo $reservation["TripID"]; ?></td>
                                                     <td><?php echo $reservation["Quantity"]; ?></td>
                                                     <td><?php echo $reservation["BookedDate"]; ?></td>
-                                                    <td><?php echo $reservation["ConfirmationDate"]; ?></td>
+                                                    <td><?php echo ($reservation["ConfirmationDate"])? $reservation["ConfirmationDate"]:"Not yet confirmed"; ?></td>
                                                     <td><?php echo $reservation["TotalFare"]; ?></td>
                                                     <td><?php echo $reservation["Status"]; ?></td>
                                                 </tr> 
