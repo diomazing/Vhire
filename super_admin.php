@@ -44,7 +44,7 @@
                             <img id="loginlogo" src="./images/icons/logo2.png" alt="logo">
                         </div> -->
                         
-                        <div class="center">
+                        <div class="center" style="width: auto;">
                             <h1 style="color: black;">Terminals</h1>
                             <table class="paleBlueRows">
                                 <thead>
@@ -68,7 +68,7 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="center">
+                        <div class="center" style="width: auto;">
                         <h1 style="color: black; margin-top: 2rem">Vehicle In Terminal</h1>
                             <table class="paleBlueRows">
                                 <thead>
