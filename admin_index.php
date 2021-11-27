@@ -44,6 +44,7 @@
                         </div> -->
                     <?php 
                         while($terminal = mysqli_fetch_assoc($terminals)){  
+
                             $result = mysqli_query($conn, "SELECT CONCAT(vhire.Brand,' ',vhire.Model,' ',PlateNumber) AS VehicleName,
                                                     trip.RouteID, 
                                                     CONCAT(driver.FirstName,' ',driver.LastName) AS DriverName,
@@ -54,17 +55,25 @@
                                                     INNER JOIN route ON trip.RouteID = route.RouteID 
                                                     INNER JOIN vhire ON vhire.VehicleID = trip.VehicleID 
                                                     INNER JOIN driver ON driver.DriverID = vhire.DriverID
-                                                    WHERE route.OriginalTerminalID =".$terminal['TerminalID']);                        
-                            if(mysqli_num_rows($result) == 0){ 
-                                echo "<div class='center'>
-                                <h1 style='color: black;'>".$terminal['LocationName']."</h1><hr><br><br>
-                                <h1 style='color: red;'>Sorry No Available Trips for this Terminal</h1>
-                                </div>";
-                            }else{
+                                                    WHERE route.OriginalTerminalID =".$terminal['TerminalID']);      
+                            $tripCount = mysqli_num_rows($result);
+                            $result2 = mysqli_query($conn,"SELECT * FROM reservations 
+                                                            INNER JOIN customer ON reservations.CustomerID = customer.CustomerID
+                                                            INNER JOIN trip ON reservations.TripID = trip.TripID
+                                                            INNER JOIN route ON trip.RouteID = route.RouteID
+                                                            WHERE route.OriginalTerminalID = ".$terminal['TerminalID']);
+                            $reservationCount = mysqli_num_rows($result2);
                     ?>
                         <div class="center">
+                            <?php if(mysqli_num_rows($result) == 0){ 
+                                echo "<div class='center'>
+                                <h1 style='color: black;'>".$terminal['LocationName']."</h1><hr><br><br>
+                                <h2 style='color: black;'>Trips<hr><br><br>
+                                <h2 style='color: red;'>Sorry No Available Trips for this Terminal</h2>
+                                </div>";
+                            }else{ ?>
                             <h1 style="color: black;"><?php echo $terminal['LocationName'];?></h1><hr>
-                            <h2 style="color: black;"> Trips </h2>
+                            <h2 style="color: black;"><?php echo $tripCount;?> Available Trips </h2>
                             <table class="paleBlueRows">
                                 <thead>
                                 <tr>
@@ -91,9 +100,50 @@
                                     </tbody>
                                 </tr>
                             </table>
+                            <?php } ?>
+
+                            <?php if(mysqli_num_rows($result2) == 0){ 
+                                    echo "<div class='center'>
+                                    <h2 style='color: black;'> Reservations </h2><hr><br><br>
+                                    <h2 style='color: red;'>Sorry No Available Reservations for this Terminal</h2>
+                                    </div>";
+                                }else{                                
+                            ?>
+                                <h2 style='color: black;'><?php echo $reservationCount;?> Reservations </h2><hr><br><br>
+                                <table class="paleBlueRows">
+                                    <thead>
+                                    <tr>
+                                        <th>Reservation ID</th>
+                                        <th>Customer Name</th>
+                                        <th>TripID</th>
+                                        <th>Quantity</th>
+                                        <th>BookedDate</th>
+                                        <th>ConfirmationDate</th>
+                                        <th>Total Fare</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <tbody>
+                                            <?php while($reservation = mysqli_fetch_assoc($result2)){?>
+                                                <tr>
+                                                    <td><?php echo $reservation["ReservationID"]; ?></td>
+                                                    <td><?php echo $reservation["FirstName"]." ".$reservation["LastName"]; ?></td>
+                                                    <td><?php echo $reservation["TripID"]; ?></td>
+                                                    <td><?php echo $reservation["Quantity"]; ?></td>
+                                                    <td><?php echo $reservation["BookedDate"]; ?></td>
+                                                    <td><?php echo $reservation["ConfirmationDate"]; ?></td>
+                                                    <td><?php echo $reservation["TotalFare"]; ?></td>
+                                                    <td><?php echo $reservation["Status"]; ?></td>
+                                                </tr> 
+                                            <?php } ?>
+                                        </tbody>
+                                    </tr>
+                                </table>             
+                            <?php } ?>    
                         </div>
                     <?php 
-                            }
+                           
                         }
                     ?>
                    </div>
