@@ -36,10 +36,18 @@
                         $date = new DateTime();
                         $currentDate = $date->format('Y-m-d H:i:s');
                         if(isset($_GET['id'])){
-                            $res = mysqli_query($conn, "UPDATE reservations SET ConfirmationDate = '".$currentDate."' WHERE ReservationID = ".$_GET['id']);
+                            $res = mysqli_query($conn, "UPDATE reservations SET Status = 'Accepted', ConfirmationDate = '".$currentDate."' WHERE ReservationID = ".$_GET['id']);
 
                             if($res){
-                                echo "<h1 style='color:green'>Successfully Confirmed Booking Request</h1>";
+                                $res2 = mysqli_query($conn, "SELECT * FROM reservations WHERE ReservationID = ".$_GET['id']);
+                                $reservation = mysqli_fetch_assoc($res2);
+
+                                //Check if already accepted
+                                if($reservation['Status'] == 'Accepted'){
+                                    echo "<h1 style='color:green'>Already Confirmed Booking Request</h1>"; 
+                                }else{
+                                    echo "<h1 style='color:green'>Successfully Confirmed Booking Request</h1>";
+                                }
                             }else{
                                 echo "<h1 style='color:red'>Error: Failed Confirming Booking Request</h1>"; 
                             }
