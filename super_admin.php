@@ -26,7 +26,9 @@
                     <img id="menu" src="./images/icons/menu.png" alt="menu" onclick="menuButton()">
                 </div>
                 <div>
-                    <a href="super_admin.php"><img id="logo" src="./images/icons/logo.png" alt="logo"></a>
+                    <a href="super_admin.php">
+                        <img id="logo" src="./images/icons/logo.png" alt="logo">
+                    </a>
                 </div>
             </div>
         </header>
@@ -43,9 +45,8 @@
                         <!-- <div class="center_img">
                             <img id="loginlogo" src="./images/icons/logo2.png" alt="logo">
                         </div> -->
-                        
-                        <div class="center" style="width: auto;">
-                            <h1 style="color: black;">Terminals</h1>
+                        <h1 style="color: black; margin-bottom: -10%">Terminals</h1>
+                        <div class="center admin" style="width: auto;">
                             <table class="paleBlueRows">
                                 <thead>
                                 <tr>
@@ -68,8 +69,9 @@
                                 </tr>
                             </table>
                         </div>
-                        <div class="center" style="width: auto;">
                         <h1 style="color: black; margin-top: 2rem">Vehicle In Terminal</h1>
+                        <div class="center admin" style="width: auto;">
+                        
                             <table class="paleBlueRows">
                                 <thead>
                                 <tr>
